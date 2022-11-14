@@ -1,4 +1,4 @@
-import { hexFromOkhsl, okhslFromHex } from "./okhsl/convert";
+import { hexFromOkhsl, okhslFromHex } from "./okhsl/index.js";
 
 export class Color {
   private readonly _h: number;

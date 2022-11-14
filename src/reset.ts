@@ -1,4 +1,4 @@
-import { globalStyles } from "./style";
+import { globalStyles } from "./style.js";
 
 export const reset = (rootSelector: string | null = null) => {
   globalStyles({

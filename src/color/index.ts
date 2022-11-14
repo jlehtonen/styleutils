@@ -1,4 +1,4 @@
-export { Color } from "./color";
-export { css } from "./colors/css";
-export { radix } from "./colors/radix";
-export { tailwind } from "./colors/tailwind";
+export { Color } from "./color.js";
+export { css } from "./colors/css.js";
+export { radix } from "./colors/radix.js";
+export { tailwind } from "./colors/tailwind.js";

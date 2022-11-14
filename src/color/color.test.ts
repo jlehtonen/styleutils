@@ -1,4 +1,4 @@
-import { Color } from "./color";
+import { Color } from "./color.js";
 
 const isGrayscale = (hex: string) => {
   if (hex.length !== 7) {

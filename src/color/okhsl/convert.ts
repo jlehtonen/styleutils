@@ -1,4 +1,4 @@
-import { okhslToSrgb, srgbToOkhsl } from "./okhsl";
+import { okhslToSrgb, srgbToOkhsl } from "./okhsl.js";
 
 export interface RGB {
   r: number;
