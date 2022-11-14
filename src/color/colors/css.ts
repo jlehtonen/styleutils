@@ -1,4 +1,4 @@
-import { Color } from "../color";
+import { Color } from "../color.js";
 
 export const css = {
   tan: Color.fromHex("#D2B48C"),
