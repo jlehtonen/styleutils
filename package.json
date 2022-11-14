@@ -1,9 +1,16 @@
 {
-  "name": "styleutils",
-  "version": "0.0.0",
-  "description": "",
+  "name": "@jlehtonen/styleutils",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/jlehtonen"
+  },
+  "version": "0.0.1",
+  "description": "Some utilities for web front-end projects styled with vanilla-extract.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jlehtonen/styleutils"
+  },
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
