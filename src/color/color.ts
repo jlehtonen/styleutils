@@ -1,4 +1,4 @@
-import { okhslToSrgb, srgbToOkhsl } from "./okhsl/okhsl.js";
+import { okhslToSrgb, srgbToOkhsl } from "./okhsl.js";
 
 export class Color {
   private readonly _h: number;

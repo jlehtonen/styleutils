@@ -15,3 +15,5 @@ export const createTheme = createVanillaTheme;
 export { reset } from "./reset.js";
 
 export { recipe } from "@vanilla-extract/recipes";
+
+export { Shadow, shadow } from "./properties/index.js";
