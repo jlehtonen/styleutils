@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
-    "test": "jest --watch --config jestconfig.json"
+    "test": "jest --watch --config jest.config.js"
   },
   "author": "Jaakko Lehtonen",
   "license": "MIT",
