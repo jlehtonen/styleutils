@@ -71,6 +71,10 @@ export class Color {
     return new Color(this._h, this._s, this.clamp(0, l, 100) / 100, this._a);
   }
 
+  a(a: number) {
+    return new Color(this._h, this._s, this._l, this.clamp(0, a, 100) / 100);
+  }
+
   dh(dh: number) {
     return this.h(this._h * 100 + dh);
   }
@@ -81,6 +85,10 @@ export class Color {
 
   dl(dl: number) {
     return this.l(this._l * 100 + dl);
+  }
+
+  da(da: number) {
+    return this.a(this._a * 100 + da);
   }
 
   static isValidHex(hex: string) {

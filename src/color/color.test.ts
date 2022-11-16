@@ -614,3 +614,44 @@ describe("Color.rgba", () => {
     expect(Color.fromHex(hex).rgba).toEqual(rgba);
   });
 });
+
+test.each([
+  ["#000", "#000", 100],
+  ["#000", "#0000", -1],
+  ["#000", "#0000", -100],
+  ["#000", "#0000", -343],
+  ["#000", "#000", 100.1],
+  ["#000", "#000", 200],
+  ["#000", "#000", 100],
+  ["#000", "#000", 2354],
+  ["#000", "#0000", 0],
+  ["#000", "#000000fe", (254 / 255) * 100],
+  ["#000", "#00000001", (1 / 255) * 100],
+  ["#ff0f", "#ff0f", 100],
+  ["#ff0f", "#ff00", 0],
+  ["#000000", "#000", 100],
+  ["#00000000", "#000", 100],
+  ["#ff0000ab", "#f00", 100],
+  ["#ff0000ab", "#f000", 0],
+])(
+  "Setting alpha returns correct hex (inputHex = %s, outputHex = %s, a = %s)",
+  (inputHex, outputHex, a) => {
+    expect(Color.fromHex(inputHex).a(a).hex).toBe(Color.compressHex(outputHex));
+  }
+);
+
+test.each([
+  ["#000", "#000", 100],
+  ["#000", "#0000", -100],
+  ["#000", "#0000", -213],
+  ["#000", "#000000fe", -(1 / 255) * 100],
+  ["#000", "#000000f0", -(15 / 255) * 100],
+  ["#000", "#000e", -(17 / 255) * 100],
+  ["#0000", "#000", 100],
+  ["#0000", "#00000001", (1 / 255) * 100],
+])(
+  "Shifting alpha returns correct hex (inputHex = %s, outputHex = %s, a = %s)",
+  (inputHex, outputHex, a) => {
+    expect(Color.fromHex(inputHex).da(a).hex).toBe(Color.compressHex(outputHex));
+  }
+);
