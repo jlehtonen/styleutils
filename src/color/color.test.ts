@@ -590,6 +590,8 @@ test.each([
   ["#aaBBccff", "#abc"],
   ["#aaBBcc55", "#abc5"],
   ["#aaBBcc56", "#aabbcc56"],
+  ["#2e67df33", "#2e67df33"],
+  ["#120000aa", "#120000aa"],
 ])(
   "Color.compressHex returns correct hex (inputHex = %s, outputHex = %s)",
   (inputHex, outputHex) => {
@@ -627,16 +629,17 @@ test.each([
   ["#000", "#0000", 0],
   ["#000", "#000000fe", (254 / 255) * 100],
   ["#000", "#00000001", (1 / 255) * 100],
-  ["#ff0f", "#ff0f", 100],
+  ["#ff0f", "#ff0", 100],
   ["#ff0f", "#ff00", 0],
   ["#000000", "#000", 100],
   ["#00000000", "#000", 100],
   ["#ff0000ab", "#f00", 100],
   ["#ff0000ab", "#f000", 0],
+  ["#2e67df", "#2e67df33", 20],
 ])(
   "Setting alpha returns correct hex (inputHex = %s, outputHex = %s, a = %s)",
   (inputHex, outputHex, a) => {
-    expect(Color.fromHex(inputHex).a(a).hex).toBe(Color.compressHex(outputHex));
+    expect(Color.fromHex(inputHex).a(a).hex).toBe(outputHex);
   }
 );
 
@@ -652,6 +655,6 @@ test.each([
 ])(
   "Shifting alpha returns correct hex (inputHex = %s, outputHex = %s, a = %s)",
   (inputHex, outputHex, a) => {
-    expect(Color.fromHex(inputHex).da(a).hex).toBe(Color.compressHex(outputHex));
+    expect(Color.fromHex(inputHex).da(a).hex).toBe(outputHex);
   }
 );

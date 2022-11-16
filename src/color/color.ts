@@ -137,7 +137,7 @@ export class Color {
         return `#${r[0]}${g[0]}${b[0]}${alpha}`;
       }
 
-      if (a[0] === a[1]) {
+      if (a === "ff") {
         return hex.slice(0, 7).toLowerCase();
       }
 
