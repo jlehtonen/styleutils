@@ -17,6 +17,9 @@ const defineVars =
         styleObjects.push({ vars: { [varName]: value } });
       } else {
         Object.entries(value).forEach(([subKey, subValue]) => {
+          if (subKey === "base") {
+            return styleObjects.push({ vars: { [varName]: subValue } });
+          }
           styleObjects.push(
             selector.screen(subKey)({
               vars: {
