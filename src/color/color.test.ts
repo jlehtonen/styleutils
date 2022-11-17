@@ -658,3 +658,16 @@ test.each([
     expect(Color.fromHex(inputHex).da(a).hex).toBe(outputHex);
   }
 );
+
+test.each([
+  [{ h: 0, s: 0, l: 0, a: 100 }, "#000"],
+  [{ h: 0, s: 100, l: 0, a: 100 }, "#000"],
+  [{ h: 0, s: 0, l: 0, a: 0 }, "#0000"],
+  [{ h: 0, s: 0, l: 100, a: 100 }, "#fff"],
+  [{ h: 0, s: 100, l: 100, a: 100 }, "#fff"],
+  [{ h: 0, s: 0, l: 100, a: 0 }, "#fff0"],
+  [{ h: 0, s: 0, l: 100 * (254 / 255), a: 100 }, "#fefefe"],
+  [{ h: 0, s: 0, l: 100 * (254 / 255), a: 100 * (253 / 255) }, "#fefefefd"],
+])("new Color returns correct color (input = %s, hex = %s)", ({ h, s, l, a }, hex) => {
+  expect(new Color(h, s, l, a).hex).toBe(hex);
+});

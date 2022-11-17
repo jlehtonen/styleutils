@@ -6,7 +6,7 @@ export class Color {
   private readonly _l: number;
   private readonly _a: number;
 
-  constructor(h: number, s: number, l: number, a = 1) {
+  constructor(h: number, s: number, l: number, a = 100) {
     if (s === 0) {
       this._h = 0;
       this._s = 0;
@@ -21,20 +21,21 @@ export class Color {
       this._l = 1;
     } else {
       this._h = h;
-      this._s = this.clamp(0, s, 1);
-      this._l = this.clamp(0, l, 1);
+      this._s = this.clamp(0, s, 100);
+      this._l = this.clamp(0, l, 100);
     }
     this._a = a;
   }
 
   get hex(): string {
-    const okhsl = { h: this._h, s: this._s, l: this._l };
-    const hex = Color.hexFromOkhsl(okhsl.h, okhsl.s, okhsl.l);
+    const hex = this.hslToHex();
     if (hex === undefined) {
-      throw new Error(`Invalid color: ${JSON.stringify(okhsl)}`);
+      throw new Error(
+        `Invalid color: ${JSON.stringify({ h: this._h, s: this._s, l: this._l })}`
+      );
     }
 
-    const alpha256 = Math.round(this._a * 255);
+    const alpha256 = Math.round((this._a / 100) * 255);
     if (alpha256 === 255) {
       return Color.compressHex(hex);
     }
@@ -49,7 +50,6 @@ export class Color {
 
   static fromHex(hex: string) {
     const { h, s, l, a } = Color.parseHex(hex);
-
     if (Color.isGrayscaleHex(hex)) {
       return new Color(0, 0, l, a);
     }
@@ -57,38 +57,38 @@ export class Color {
   }
 
   h(h: number) {
-    return new Color(h / 100, this._s, this._l, this._a);
+    return new Color(h, this._s, this._l, this._a);
   }
 
   s(s: number) {
     if (this._s === 0) {
       return this;
     }
-    return new Color(this._h, this.clamp(0, s, 100) / 100, this._l, this._a);
+    return new Color(this._h, this.clamp(0, s, 100), this._l, this._a);
   }
 
   l(l: number) {
-    return new Color(this._h, this._s, this.clamp(0, l, 100) / 100, this._a);
+    return new Color(this._h, this._s, this.clamp(0, l, 100), this._a);
   }
 
   a(a: number) {
-    return new Color(this._h, this._s, this._l, this.clamp(0, a, 100) / 100);
+    return new Color(this._h, this._s, this._l, this.clamp(0, a, 100));
   }
 
   dh(dh: number) {
-    return this.h(this._h * 100 + dh);
+    return this.h(this._h + dh);
   }
 
   ds(ds: number) {
-    return this.s(this._s * 100 + ds);
+    return this.s(this._s + ds);
   }
 
   dl(dl: number) {
-    return this.l(this._l * 100 + dl);
+    return this.l(this._l + dl);
   }
 
   da(da: number) {
-    return this.a(this._a * 100 + da);
+    return this.a(this._a + da);
   }
 
   static isValidHex(hex: string) {
@@ -180,18 +180,18 @@ export class Color {
     return { r, g, b, a };
   }
 
-  private static hexFromOkhsl(h: number, s: number, l: number) {
-    const rgb = Color.rgbFromOkhsl(h, s, l);
+  private hslToHex() {
+    const rgb = this.hslToRgb();
     if (rgb === undefined) {
-      throw new Error(`Invalid color: ${JSON.stringify({ h, s, l })}`);
+      throw new Error(`Invalid color: ${JSON.stringify(this.hsla())}`);
     }
     return Color.hexFromRgb(rgb.r, rgb.g, rgb.b);
   }
 
-  private static rgbFromOkhsl(h: number, s: number, l: number) {
-    const [r, g, b] = okhslToSrgb(h, s, l);
+  private hslToRgb() {
+    const [r, g, b] = okhslToSrgb(this._h / 100, this._s / 100, this._l / 100);
     if (isNaN(r) || isNaN(g) || isNaN(b)) {
-      throw new Error(`Invalid color: ${JSON.stringify({ h, s, l })}`);
+      throw new Error(`Invalid color: ${JSON.stringify(this.hsla())}`);
     }
     return { r, g, b };
   }
@@ -214,7 +214,7 @@ export class Color {
     if (okhsl === undefined) {
       throw new Error(`Invalid hex: ${hex}`);
     }
-    return { ...okhsl, a };
+    return { ...okhsl, a: a * 100 };
   }
 
   private static okhslFromRgb(r: number, g: number, b: number) {
@@ -225,6 +225,10 @@ export class Color {
     if (isNaN(h) || isNaN(s) || isNaN(l)) {
       return undefined;
     }
-    return { h, s, l };
+    return { h: h * 100, s: s * 100, l: l * 100 };
+  }
+
+  private hsla() {
+    return { h: this._h, s: this._s, l: this._l, a: this._a };
   }
 }
