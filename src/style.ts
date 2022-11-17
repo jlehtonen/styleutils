@@ -1,19 +1,7 @@
-import {
-  globalStyle,
-  style as vanillaStyle,
-  StyleRule,
-  GlobalStyleRule,
-} from "@vanilla-extract/css";
-import {
-  ClassNames,
-  StyleWithSelectors,
-} from "@vanilla-extract/css/dist/declarations/src/types";
+import { globalStyle, GlobalStyleRule } from "@vanilla-extract/css";
+import { StyleWithSelectors } from "@vanilla-extract/css/dist/declarations/src/types";
 
 export type GlobalCss = Record<string, GlobalStyleRule>;
-
-export const style = (...rules: Array<StyleRule | ClassNames>) => {
-  return vanillaStyle(rules);
-};
 
 export const globalStyles = (rules: GlobalCss) => {
   Object.entries(rules).forEach(([selector, rule]) => {
