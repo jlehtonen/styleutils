@@ -1,5 +1,5 @@
 import { uniqueHashGenerator } from "./hash.js";
-import { style } from "./style.js";
+import { style } from "@vanilla-extract/css";
 
 const defineVars =
   <T extends Record<string, any>>(vars: T) =>
