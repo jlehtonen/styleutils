@@ -4,7 +4,7 @@
     "registry": "https://npm.pkg.github.com/jlehtonen"
   },
   "type": "module",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Some utilities for web front-end projects styled with vanilla-extract.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

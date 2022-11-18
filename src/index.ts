@@ -10,8 +10,6 @@ export { GlobalCss, globalStyles, SelectorMap, selector } from "./style.js";
 
 import { createTheme as createVanillaTheme } from "@vanilla-extract/css";
 
-// import {style as vanillaStyle} from './style.js';
-// export const style = vanillaStyle
 export const createTheme = createVanillaTheme;
 
 export { reset } from "./reset.js";
@@ -25,3 +23,5 @@ export {
   generateShadows,
   shadows,
 } from "./properties/index.js";
+
+export { cls } from "./util.js";
