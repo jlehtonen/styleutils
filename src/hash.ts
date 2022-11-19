@@ -24,4 +24,6 @@ class UniqueHashGenerator {
   };
 }
 
-export const uniqueHashGenerator = new UniqueHashGenerator();
+const uniqueHashGenerator = new UniqueHashGenerator();
+
+export const nextHash = () => uniqueHashGenerator.getNextHash();

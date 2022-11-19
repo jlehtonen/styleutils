@@ -5,7 +5,7 @@ export {
   tailwind as tailwindColors,
 } from "./color/index.js";
 
-export { createVars } from "./vars.js";
+export { createVars, createVar, CreateVarOptions } from "./vars.js";
 export { GlobalCss, globalStyles, SelectorMap, selector } from "./style.js";
 
 import { createTheme as createVanillaTheme } from "@vanilla-extract/css";
