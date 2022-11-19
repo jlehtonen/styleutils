@@ -1,10 +1,3 @@
-export {
-  Color,
-  css as cssColors,
-  radix as radixColors,
-  tailwind as tailwindColors,
-} from "./color/index.js";
-
 export { createVars, createVar, CreateVarOptions } from "./vars.js";
 export { GlobalCss, globalStyles, SelectorMap, selector } from "./style.js";
 
