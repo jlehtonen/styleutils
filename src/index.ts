@@ -1,4 +1,4 @@
-export { createVars, createVar, CreateVarOptions } from "./vars.js";
+export { Vars } from "./vars.js";
 export { GlobalCss, globalStyles, SelectorMap, selector } from "./style.js";
 
 import { createTheme as createVanillaTheme } from "@vanilla-extract/css";

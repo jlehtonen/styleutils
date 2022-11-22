@@ -1,19 +1,35 @@
-import { createStyleObjects, createVarsAndVals, createVar } from "./vars.js";
+import { _Vars } from "./vars.js";
 
 test.each([
-  [{}, { vars: {}, vals: {} }],
-  [{ color: "red" }, { vars: { color: "--a" }, vals: { color: "var(--a, red)" } }],
+  [{}, undefined, { vars: {}, vals: {} }],
+  [
+    { color: "red" },
+    undefined,
+    { vars: { color: "--a" }, vals: { color: "var(--a, red)" } },
+  ],
   [
     { var1: "asd", another: 123 },
+    undefined,
     {
-      vars: { var1: "--b", another: "--c" },
-      vals: { var1: "var(--b, asd)", another: "var(--c, 123)" },
+      vars: { var1: "--a", another: "--b" },
+      vals: { var1: "var(--a, asd)", another: "var(--b, 123)" },
     },
+  ],
+  [
+    { color: "red" },
+    "asd",
+    { vars: { color: "--asd_a" }, vals: { color: "var(--asd_a, red)" } },
+  ],
+  [
+    { asd: "red" },
+    "qwe",
+    { vars: { asd: "--qwe_a" }, vals: { asd: "var(--qwe_a, red)" } },
   ],
 ])(
   "createVarsAndVals returns correct value (input = %s, output = %s)",
-  (input, output) => {
-    expect(createVarsAndVals(input)).toEqual(output);
+  (input, prefix, output) => {
+    const _vars = new _Vars(prefix);
+    expect(_vars.createVarsAndVals(input)).toEqual(output);
   }
 );
 
@@ -47,45 +63,27 @@ test.each([
 ])(
   "createStyleObjects returns correct value (vars = %s, values = %s, output = %s)",
   (vars, values, output) => {
-    expect(createStyleObjects(vars, values)).toEqual(output);
+    const _vars = new _Vars();
+    expect(_vars.createStyleObjects(vars, values)).toEqual(output);
   }
 );
 
 test.each([
-  [{}, { name: "--d", value: "var(--d)" }],
-  [{ name: "asd" }, { name: "--asd", value: "var(--asd)" }],
+  [{}, undefined, { name: "--a", value: "var(--a)" }],
+  [{ name: "asd" }, undefined, { name: "--asd", value: "var(--asd)" }],
   [
     { name: "asd", fallback: 123 },
+    undefined,
     { name: "--asd", value: "var(--asd, 123)" },
   ],
-  [{ fallback: 123 }, { name: "--e", value: "var(--e, 123)" }],
-  [{ prefix: "asd" }, { name: "--asd_f", value: "var(--asd_f)" }],
-  [
-    { prefix: "qwe", name: "asd" },
-    { name: "--qwe_asd", value: "var(--qwe_asd)" },
-  ],
-  [
-    { prefix: "qwe", fallback: 12 },
-    { name: "--qwe_g", value: "var(--qwe_g, 12)" },
-  ],
-])("createVar returns correct value (input = %s, output = %s)", (input, output) => {
-  expect(createVar(input)).toEqual(output);
-});
-
-test.each([
-  [
-    { color: "red" },
-    "asd",
-    { vars: { color: "--asd_h" }, vals: { color: "var(--asd_h, red)" } },
-  ],
-  [
-    { asd: "red" },
-    "qwe",
-    { vars: { asd: "--qwe_i" }, vals: { asd: "var(--qwe_i, red)" } },
-  ],
+  [{ fallback: 123 }, undefined, { name: "--a", value: "var(--a, 123)" }],
+  [{}, "asd", { name: "--asd_a", value: "var(--asd_a)" }],
+  [{ name: "asd" }, "qwe", { name: "--qwe_asd", value: "var(--qwe_asd)" }],
+  [{ fallback: 12 }, "qwe", { name: "--qwe_a", value: "var(--qwe_a, 12)" }],
 ])(
-  "createVarsAndVals returns correct value when using prefix (input = %s, prefix = %s, output = %s)",
+  "create returns correct value (input = %s, prefix = %s, output = %s)",
   (input, prefix, output) => {
-    expect(createVarsAndVals(input, prefix)).toEqual(output);
+    const _vars = new _Vars(prefix);
+    expect(_vars.create(input)).toEqual(output);
   }
 );

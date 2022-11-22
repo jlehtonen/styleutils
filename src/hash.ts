@@ -1,6 +1,6 @@
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-class UniqueHashGenerator {
+export class UniqueHashGenerator {
   private index: number;
 
   constructor() {
@@ -23,7 +23,3 @@ class UniqueHashGenerator {
     return hash || alphabet[0];
   };
 }
-
-const uniqueHashGenerator = new UniqueHashGenerator();
-
-export const nextHash = () => uniqueHashGenerator.getNextHash();
