@@ -7,7 +7,7 @@ export const createTheme = createVanillaTheme;
 
 export { reset } from "./reset.js";
 
-export { style } from "@vanilla-extract/css";
+export { style, keyframes } from "@vanilla-extract/css";
 export { recipe } from "@vanilla-extract/recipes";
 
 export {
