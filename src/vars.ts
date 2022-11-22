@@ -9,10 +9,13 @@ export type VarValue = SimpleVarValue | ComplexVarValue;
 export interface CreateVarOptions {
   name?: string;
   fallback?: string | number;
+  prefix?: string;
 }
 
 export const createVar = (options?: CreateVarOptions) => {
-  const name = `--${options?.name !== undefined ? options.name : nextHash()}`;
+  const name = `--${options?.prefix !== undefined ? `${options.prefix}_` : ""}${
+    options?.name !== undefined ? options.name : nextHash()
+  }`;
   const fallback = options?.fallback;
   return { name, value: fallback ? `var(${name}, ${fallback})` : `var(${name})` };
 };
@@ -31,14 +34,15 @@ const getComplexVarStyleObjects = (varName: string, complexValue: ComplexVarValu
 };
 
 export const createVarsAndVals = <T extends Record<string, SimpleVarValue>>(
-  vars: T
+  vars: T,
+  prefix?: string
 ) => {
   type Key = keyof T;
   const cssVars = {} as { [key in Key]: string };
   const vals = {} as { [key in Key]: string };
 
   Object.entries(vars).forEach(([key, fallback]) => {
-    const { name, value } = createVar({ fallback });
+    const { name, value } = createVar({ fallback, prefix });
     cssVars[key as Key] = name;
     vals[key as Key] = value;
   });
@@ -66,8 +70,11 @@ export const createStyleObjects = <T extends Record<string, SimpleVarValue>>(
   return styleObjects;
 };
 
-export const createVars = <T extends Record<string, SimpleVarValue>>(vars: T) => {
-  const { vars: cssVars, vals } = createVarsAndVals(vars);
+export const createVars = <T extends Record<string, SimpleVarValue>>(
+  vars: T,
+  prefix?: string
+) => {
+  const { vars: cssVars, vals } = createVarsAndVals(vars, prefix);
 
   return {
     vars: (values: Partial<Record<keyof T, VarValue>>) =>

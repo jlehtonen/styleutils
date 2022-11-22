@@ -59,6 +59,33 @@ test.each([
     { name: "--asd", value: "var(--asd, 123)" },
   ],
   [{ fallback: 123 }, { name: "--e", value: "var(--e, 123)" }],
+  [{ prefix: "asd" }, { name: "--asd_f", value: "var(--asd_f)" }],
+  [
+    { prefix: "qwe", name: "asd" },
+    { name: "--qwe_asd", value: "var(--qwe_asd)" },
+  ],
+  [
+    { prefix: "qwe", fallback: 12 },
+    { name: "--qwe_g", value: "var(--qwe_g, 12)" },
+  ],
 ])("createVar returns correct value (input = %s, output = %s)", (input, output) => {
   expect(createVar(input)).toEqual(output);
 });
+
+test.each([
+  [
+    { color: "red" },
+    "asd",
+    { vars: { color: "--asd_h" }, vals: { color: "var(--asd_h, red)" } },
+  ],
+  [
+    { asd: "red" },
+    "qwe",
+    { vars: { asd: "--qwe_i" }, vals: { asd: "var(--qwe_i, red)" } },
+  ],
+])(
+  "createVarsAndVals returns correct value when using prefix (input = %s, prefix = %s, output = %s)",
+  (input, prefix, output) => {
+    expect(createVarsAndVals(input, prefix)).toEqual(output);
+  }
+);
