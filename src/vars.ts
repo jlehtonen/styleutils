@@ -86,7 +86,7 @@ export class _Vars {
       const simpleStyleObject = this.getSimpleVarStyleObject(varName, value);
       return minWidth === "base"
         ? simpleStyleObject
-        : selector.screen(minWidth)(simpleStyleObject);
+        : { "@media": selector.screen(minWidth)(simpleStyleObject) };
     });
   }
 }
