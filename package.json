@@ -1,7 +1,7 @@
 {
   "name": "@jlehtonen/styleutils",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Some utilities for web front-end projects styled with vanilla-extract.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
