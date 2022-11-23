@@ -29,6 +29,7 @@ export class _Vars {
     const { vars: cssVars, vals } = this.createVarsAndVals(vars);
 
     return {
+      names: cssVars,
       vars: (values: Partial<Record<keyof T, VarValue>>) =>
         style(this.createStyleObjects(cssVars, values)),
       vals,
