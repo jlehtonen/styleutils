@@ -14,10 +14,8 @@ export type SelectorMap = { selectors: { [selector: string]: GlobalStyleRule } }
 const data =
   (name: string) =>
   (value: string | null = null) =>
-  (...rules: GlobalStyleRule[]): SelectorMap => ({
-    selectors: {
-      [getDataSelector(name, value)]: combine(...rules),
-    },
+  (...rules: GlobalStyleRule[]) => ({
+    [getDataSelector(name, value)]: combine(...rules),
   });
 
 const getDataSelector = (name: string, value: string | null = null) => {
@@ -40,9 +38,7 @@ const screen =
   (minWidth: string) =>
   (...rules: StyleWithSelectors[]) => {
     return {
-      "@media": {
-        [`screen and (min-width: ${minWidth})`]: combine(...rules),
-      },
+      [`screen and (min-width: ${minWidth})`]: combine(...rules),
     };
   };
 
